@@ -1,0 +1,12 @@
+package com.cg.Entity;
+
+import java.time.LocalDate;
+import lombok.Data;
+
+@Data
+public class ProductDTO {
+ private String name;
+ private int price;
+ private LocalDate mfd;
+ 
+}

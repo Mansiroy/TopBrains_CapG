@@ -1,0 +1,78 @@
+package com.cg.oneToone;
+
+import java.time.LocalDate;
+import java.util.*;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class PersonMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em =emf.createEntityManager();
+		  Scanner sc = new Scanner(System.in);
+	        PersonService service = new PersonService();
+
+	        while(true){
+
+	            System.out.println("1 Add Person");
+	            System.out.println("2 Find Person");
+	            System.out.println("3 Update Person");
+	            System.out.println("4 Delete Person");
+	            System.out.println("5 Exit");
+
+	            int choice = sc.nextInt();
+
+	            switch(choice){
+
+	                case 1:
+	                    sc.nextLine();
+	                    System.out.println("Enter Name");
+	                    String name = sc.nextLine();
+
+	                    System.out.println("Enter DL Number");
+	                    String dl = sc.nextLine();
+
+	                    DrivingLicense d = new DrivingLicense(dl);
+	                    Person p = new Person(name,d);
+
+	                    service.addPerson(p);
+	                    break;
+
+	                case 2:
+	                    System.out.println("Enter Person ID");
+	                    int id = sc.nextInt();
+	                    service.findPerson(id);
+	                    break;
+
+	                case 3:
+	                    System.out.println("Enter Person ID");
+	                    int uid = sc.nextInt();
+	                    sc.nextLine();
+	                    System.out.println("Enter New Name");
+	                    String newName = sc.nextLine();
+
+	                    service.updatePerson(uid,newName);
+	                    break;
+
+	                case 4:
+	                    System.out.println("Enter Person ID");
+	                    int did = sc.nextInt();
+	                    service.deletePerson(did);
+	                    break;
+
+	                case 5:
+	                    System.exit(0);
+	            }
+	        }
+//		em.getTransaction().begin();
+//		Dl obj = new Dl(LocalDate.of(2032, 10, 12), LocalDate.of(2012, 10, 10), "LMV,HMV");
+//		Person p = new Person("Mansi", LocalDate.of(2002, 10, 10), obj);
+//		
+//		p.setDl(obj);
+//		em.persist(p);
+//		em.getTransaction().commit();
+//		System.out.println("Person Created...");
+	}
+}

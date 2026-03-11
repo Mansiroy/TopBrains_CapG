@@ -1,0 +1,19 @@
+Stream API
+
+Also refer an EmployeeRepository class which is used to create and populate employee’s collection with sample data.
+
+Create an EmployeeService class which queries on collections provided by EmployeeRepository class for following requirements. Create separate method for each requirement. (Note: Each requirement stated below must be attempted by using lambda expressions/stream API. It’s mandatory to solve at least 5 questions from following set. However, it is recommended to solve all questions to understand stream API thoroughly).
+
+· Find out the sum of salary of all employees.
+
+· List out department names and count of employees in each department.
+
+· Find out the senior most employee of an organization.
+
+· List employee name and duration of their service in months and days.
+
+· Find out employees without department.
+
+· Find out department without employees.
+
+· Find departments with highest count of employees.

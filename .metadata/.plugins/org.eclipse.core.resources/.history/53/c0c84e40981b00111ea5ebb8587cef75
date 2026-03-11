@@ -1,0 +1,29 @@
+package com.cg.Entity;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+
+public class CriteriaDemo {
+
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+        
+        cq.select(cq.from(Product.class));
+        Root<Product> r = cq.from(Product.class);
+        //Predicate con1 = 
+        cq.select(r).where(cb.lessThan(r.get("Price"), 20));
+        List<Product> li = em.createQuery(cq).getResultList(); 
+        li.forEach(p-> System.out.println(p));
+        
+	}
+}

@@ -1,0 +1,63 @@
+package com.cg.oneToone;
+
+
+import jakarta.persistence.*;
+
+public class PersonService {
+	    EntityManagerFactory emf =
+	            Persistence.createEntityManagerFactory("persistence");
+
+	    EntityManager em = emf.createEntityManager();
+
+	    // CREATE
+	    public void addPerson(Person p) {
+
+	        em.getTransaction().begin();
+	        em.persist(p);
+	        em.getTransaction().commit();
+
+	        System.out.println("Person Saved");
+	    }
+
+	    // READ
+	    public void findPerson(int id) {
+
+	        Person p = em.find(Person.class, id);
+
+	        if (p != null) {
+	            System.out.println("Person Name: " + p.getName());
+	            System.out.println("DL Number: " + p.getDl().getDlNumber());
+	        } else {
+	            System.out.println("Person not found");
+	        }
+	    }
+
+	    // UPDATE
+	    public void updatePerson(int id, String name) {
+
+	        em.getTransaction().begin();
+
+	        Person p = em.find(Person.class, id);
+
+	        if (p != null) {
+	            p.setName(name);
+	            em.merge(p);
+	        }
+
+	        em.getTransaction().commit();
+	    }
+
+	    // DELETE
+	    public void deletePerson(int id) {
+
+	        em.getTransaction().begin();
+
+	        Person p = em.find(Person.class, id);
+
+	        if (p != null) {
+	            em.remove(p);
+	        }
+
+	        em.getTransaction().commit();
+	    }
+}

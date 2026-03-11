@@ -1,0 +1,99 @@
+package TopBarinsAssignment2_07_03_2026;
+
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
+import java.util.*;
+
+public class Main {
+
+    @SuppressWarnings("deprecation")
+	public static void main(String[] args) {
+
+        Configuration cfg = new Configuration();
+        cfg.configure("hibernate.cfg.xml");
+        cfg.addAnnotatedClass(Author.class);
+        cfg.addAnnotatedClass(Book.class);
+
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        // CREATE OPERATION
+
+        Author author = new Author();
+
+        Book b1 = new Book("Java Fundamentals",450,author);
+        Book b2 = new Book("Advanced Java",650,author);
+        Book b3 = new Book("Java Streams",550,author);
+
+        List<Book> books = new ArrayList<>();
+        books.add(b1);
+        books.add(b2);
+        books.add(b3);
+
+        author.setBooks(books);
+
+        session.save(author);
+
+        tx.commit();
+        System.out.println("Author and Books Saved");
+
+        // READ OPERATION
+
+        Session session2 = factory.openSession();
+
+        List<Author> list = session2.createQuery("from Author",Author.class).list();
+
+        for(Author a : list)
+        {
+            System.out.println("Author Id : "+a.getAuthorId());
+            System.out.println("Author Name : "+a.getAuthorName());
+
+            System.out.println("Books Written:");
+            System.out.println("-------------------------");
+
+            for(Book b : a.getBooks())
+            {
+                System.out.println(b.getTitle()+" - "+b.getPrice());
+            }
+        }
+
+        // UPDATE OPERATION
+
+        Session session3 = factory.openSession();
+        Transaction tx2 = session3.beginTransaction();
+
+        Query q = session3.createQuery("update Book set price=700 where title='Advanced Java'");
+        q.executeUpdate();
+
+        tx2.commit();
+
+        System.out.println("Book Price Updated");
+
+        // DELETE BOOK
+
+        Session session4 = factory.openSession();
+        Transaction tx3 = session4.beginTransaction();
+
+        Query q2 = session4.createQuery("delete from Book where title='Java Streams'");
+        q2.executeUpdate();
+
+        tx3.commit();
+
+        System.out.println("Book Deleted");
+
+        // DELETE AUTHOR (Cascade delete books)
+
+        Session session5 = factory.openSession();
+        Transaction tx4 = session5.beginTransaction();
+
+        Author a = session5.get(Author.class,101);
+        session5.delete(a);
+
+        tx4.commit();
+
+        System.out.println("Author Deleted");
+
+        factory.close();
+    }
+}

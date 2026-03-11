@@ -1,0 +1,34 @@
+package com.cg.Entity;
+
+import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ProductDTO  {
+	private String name;
+	private int price;
+	private LocalDate mfd;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public LocalDate getMfd() {
+		return mfd;
+	}
+	public void setMfd(LocalDate mfd) {
+		this.mfd = mfd;
+	}
+		
+	
+}

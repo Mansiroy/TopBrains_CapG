@@ -1,0 +1,14 @@
+package com.cg.Entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Table(name = "emp_Table")
+@Data
+public class Emp {
+  private int empid;
+  private String name;
+  private String department;
+}

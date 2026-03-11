@@ -1,0 +1,42 @@
+package com.cg.Entity;
+
+import java.util.List;
+
+
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+
+public class CriteriaDemo {
+
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+
+		cq.select(cq.from(Product.class));
+		Root<Product> r = cq.from(Product.class);
+        Predicate con1 = cb.greaterThan(r.get("price"), 50000);
+        Predicate con2 = cb.lessThan(r.get("price"), 70000);
+//      cq.select(r).where(cb.greaterThan(r.get("price"), 120000));
+//      cq.select(r).where(cb.like(r.get("name"), "L%"));
+//      cq.select(r).where(cb.and(con1, con2));
+//      cq.select(r).where(cb.or(con1, con2));
+       
+//      cq.select(r).orderBy(cb.asc(r.get("price")));
+//      cq.select(r).orderBy(cb.desc(r.get("name")));
+        cq.select(r).where(cb.or(con1, con2)).orderBy(cb.asc(r.get("name")));;
+        
+		List<Product> li = em.createQuery(cq).getResultList();
+		
+		li.forEach(p -> System.out.println(p));
+		
+
+	}
+}

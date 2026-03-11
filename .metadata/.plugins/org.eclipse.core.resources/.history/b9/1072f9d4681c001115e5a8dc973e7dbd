@@ -1,0 +1,65 @@
+package TopBarinsAssignment2_07_03_2026;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+import java.util.List;
+
+public class DaoService {
+    static EntityManager em;
+    static {
+        EntityManagerFactory   emf= Persistence.createEntityManagerFactory("my-pu");
+         em=emf.createEntityManager();
+    }
+    //=======create=========
+    public static void createAuthor(Author a,List<Book>books){
+        em.getTransaction().begin();
+        a.setBooks(books);
+        em.persist(a);
+        for(Book b:books){
+            b.setAuthor(a);
+        }
+        em.getTransaction().commit();
+        System.out.println("Author created Successfully");
+    }
+    //======read======
+    public static void getData(){
+       List<Author> authors= em.createQuery("from Author",Author.class).getResultList();
+       for(Author a:authors){
+           System.out.println("Author ID: "+a.getAuthorId());
+           System.out.println("Author Name: "+a.getAuthorName());
+           System.out.println();
+           System.out.println("Book Written: ");
+           for(Book b:a.getBooks()){
+               System.out.println(b.getTitle()+" - "+b.getPrice());
+           }
+           System.out.println();
+       }
+    }
+    //========update===========
+    public void updatePrice(int id,int newPrice){
+        em.getTransaction().begin();
+         Book b=em.find(Book.class,id);
+         if(b!=null){
+             b.setPrice(newPrice);
+             System.out.println("Updated Successfully!!");
+         }else{
+             System.out.println("Book not found!!");
+         }
+         em.getTransaction().commit();
+    }
+    //============delete==========-
+    public static void deleteBook(int id){
+        em.getTransaction().begin();
+        Book b=em.find(Book.class,id);
+        if(b!=null) {
+            em.remove(b);
+            System.out.println("Deleted successfully!!");
+        }else{
+            System.out.println("Book not found to delete!!");
+        }
+        em.getTransaction().commit();
+    }
+
+}

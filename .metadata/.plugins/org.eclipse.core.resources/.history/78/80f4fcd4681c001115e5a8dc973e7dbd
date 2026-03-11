@@ -1,0 +1,54 @@
+package TopBarinsAssignment2_07_03_2026;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int bookId;
+    private String title;
+    private int price;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+
+    Book(){}
+    public Book(String title, int price) {
+        super();
+        this.title = title;
+        this.price = price;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+}

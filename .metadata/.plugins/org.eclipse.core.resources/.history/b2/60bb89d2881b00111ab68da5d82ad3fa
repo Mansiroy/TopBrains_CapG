@@ -1,0 +1,98 @@
+package com.cg.Entity;
+
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+
+public class productMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		// em.getTransaction().begin();
+//        TypedQuery<Product> q = em.createQuery("select p from Product p", Product.class);
+//		  List<Product> li = q.getResultList();
+
+//		TypedQuery<String> q = em.createQuery("select p.name from Product p", String.class);
+//		List<String> li = q.getResultList();
+		
+		//Now i want to read the data only name, price, mfd using to make objects of array
+//		TypedQuery<Object[]> q = em.createQuery(
+//		        "select p.name, p.price, p.mfd from Product p", Object[].class);
+//
+//		List<Object[]> li = q.getResultList();
+//
+//		for(Object[] p : li){
+//		    System.out.println("Name : " + p[0]);
+//		    System.out.println("Price : " + p[1]);
+//		    System.out.println("MFD : " + p[2]);
+//		    System.out.println("--------------------");
+//		}
+//
+//		li.forEach(p -> System.out.println(p));
+		
+//		TypedQuery<ProductDTO> q = em.createQuery(
+//		        "select new ProductDTO(p.name, p.price, p.mfd) from Product p", ProductDTO.class);
+//
+//		List<ProductDTO> li = q.getResultList();
+//		li.forEach(p -> System.out.println(p));
+		
+		//I want to find the item whose price is less than 50000
+//		TypedQuery<Product> q = em.createQuery(
+//		        "select p from Product p where p.price < 50000", Product.class);
+//		TypedQuery<Product> q = em.createQuery(
+//		        "select p from Product p where p.price < :p", Product.class); //:p is named parameter
+//		q.setParameter("p", 50000);
+//
+//		List<Product> li = q.getResultList();
+//		li.forEach(p -> System.out.println(p));
+		
+		//I WANT TO FIND THE PRODUCT WHOSE NAME START WITH L
+//		TypedQuery<Product> q = em.createQuery(
+//		        "select p from Product p where p.name like :p", Product.class); //:p is named parameter
+//		q.setParameter("p", "L%");
+//
+//		List<Product> li = q.getResultList();
+//		li.forEach(p -> System.out.println(p));
+		
+		
+		//Now i want to update price whose product name start with L
+//		EntityTransaction tx = em.getTransaction();
+//		tx.begin();
+//
+//		Query q = em.createQuery(
+//		"update Product p set p.price = :price where p.name like :name");
+//
+//		q.setParameter("price", 1230000);
+//		q.setParameter("name", "L%");
+//
+//		int rows = q.executeUpdate();
+//
+//		tx.commit();
+//
+//		System.out.println(rows + " record updated");
+		
+		
+		//now i want to update price where id = 1003
+//		em.getTransaction().begin();
+//		Query q = em.createQuery("update Product p set p.price = 2390000 where p.pid =1003");
+//		int row = q.executeUpdate();
+//		em.getTransaction().commit();
+//		System.out.println(row + " record updated");
+		
+		em.getTransaction().begin();
+		Query q = em.createNativeQuery("update Product p set p.price = 2390000 where p.pid =1003");
+		int row = q.executeUpdate();
+		em.getTransaction().commit();
+		System.out.println(row + " record updated");
+		
+		
+		
+		
+		
+	}
+}

@@ -1,0 +1,124 @@
+package com.cg.pl;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
+
+import com.cg.bean.Employee;
+import com.cg.dao.EmployeeDao;
+
+public class EmployeeMain {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        EmployeeDao dao = new EmployeeDao();
+
+        int choice;
+
+        do {
+            System.out.println("\n===== EMPLOYEE MANAGEMENT =====");
+            System.out.println("1. Add Employee");
+            System.out.println("2. Find Employee by ID");
+            System.out.println("3. View All Employees");
+            System.out.println("4. Update Employee Name");
+            System.out.println("5. Delete Employee");
+            System.out.println("6. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = sc.nextInt();
+            sc.nextLine(); // clear buffer
+
+            switch (choice) {
+
+            case 1:
+                System.out.print("Enter Name: ");
+                String name = sc.nextLine();
+
+                System.out.print("Enter Email: ");
+                String email = sc.nextLine();
+
+                System.out.print("Enter DOB (yyyy-mm-dd): ");
+                String dobStr = sc.nextLine();
+
+                LocalDate dob = LocalDate.parse(dobStr);
+
+                boolean created = dao.saveEmployee(
+                        new Employee(name, dob, email));
+
+                System.out.println(created ?
+                        "Employee Added Successfully" :
+                        "Failed to Add Employee");
+                break;
+
+            case 2:
+                System.out.print("Enter Employee ID: ");
+                int id = sc.nextInt();
+
+                Employee emp = dao.findEmployee(id);
+
+                if (emp != null) {
+                    System.out.println("ID: " + emp.getEmpid());
+                    System.out.println("Name: " + emp.getName());
+                    System.out.println("Email: " + emp.getEmail());
+                    System.out.println("DOB: " + emp.getDob());
+                } else {
+                    System.out.println("Employee Not Found");
+                }
+                break;
+
+            case 3:
+                List<Employee> list = dao.getAllEmployees();
+
+                if (list.isEmpty()) {
+                    System.out.println("No Employees Found");
+                } else {
+                    list.forEach(e ->
+                            System.out.println(
+                                    e.getEmpid() + " - " +
+                                    e.getName() + " - " +
+                                    e.getEmail() + " - " +
+                                    e.getDob()));
+                }
+                break;
+
+            case 4:
+                System.out.print("Enter Employee ID: ");
+                int updateId = sc.nextInt();
+                sc.nextLine();
+
+                System.out.print("Enter New Name: ");
+                String newName = sc.nextLine();
+
+                boolean updated =
+                        dao.updateEmployeeName(updateId, newName);
+
+                System.out.println(updated ?
+                        "Employee Updated" :
+                        "Employee Not Found");
+                break;
+
+            case 5:
+                System.out.print("Enter Employee ID: ");
+                int deleteId = sc.nextInt();
+
+                boolean deleted = dao.deleteEmployee(deleteId);
+
+                System.out.println(deleted ?
+                        "Employee Deleted" :
+                        "Employee Not Found");
+                break;
+
+            case 6:
+                System.out.println("Exiting...");
+                break;
+
+            default:
+                System.out.println("Invalid Choice!");
+            }
+
+        } while (choice != 6);
+
+        sc.close();
+    }
+}

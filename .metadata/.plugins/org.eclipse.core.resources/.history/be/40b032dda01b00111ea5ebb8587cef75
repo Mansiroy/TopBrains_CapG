@@ -1,0 +1,80 @@
+package com.cg.oneTomany;
+
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+//import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
+
+public class EmpdeptMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Department d = new Department();
+		d.setDeptName("IT");
+		
+		Department d1 = new Department();
+		d1.setDeptName("HR");
+
+		Department d2 = new Department();
+		d2.setDeptName("Sales");
+
+		Department d3 = new Department();
+		d3.setDeptName("Finance");
+
+		Employee e1 = new Employee();
+		e1.setEmpName("Rahul");
+		e1.setSalary(50000);
+		e1.setDepartment(d);
+
+		Employee e2 = new Employee();
+		e2.setEmpName("Anita");
+		e2.setSalary(60000);
+		e2.setDepartment(d1);
+
+		em.persist(d);
+		em.persist(e1);
+		
+		em.persist(d1);
+		em.persist(e2);
+		
+		
+		tx.commit();
+		
+//		CriteriaBuilder cb = em.getCriteriaBuilder();
+//		CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
+//		Root<Employee> root = cq.from(Employee.class);
+//		cq.select(root).where(cb.gt(root.get("salary"), 50000));
+//    	TypedQuery<Employee> q = em.createQuery(cq);
+//		List<Employee> list = q.getResultList();
+//
+//		for(Employee e : list){
+//		    System.out.println(e.getEmpName() + " " + e.getSalary());
+//		}
+		
+//		CriteriaBuilder cb = em.getCriteriaBuilder();
+//		CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+//		Root<Employee> root = cq.from(Employee.class);
+//		Join<Employee, Department> join = root.join("department");
+//		cq.multiselect(join.get("deptName"), cb.count(root));
+//		cq.groupBy(join.get("deptName"));
+//		TypedQuery<Object[]> q = em.createQuery(cq);
+//		List<Object[]> list = q.getResultList();
+//		for(Object[] obj : list){
+//		    System.out.println("Department : " + obj[0] + 
+//		                       " | Employees : " + obj[1]);
+//		}
+   }
+}

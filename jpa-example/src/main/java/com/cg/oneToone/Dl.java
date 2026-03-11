@@ -1,0 +1,54 @@
+package com.cg.oneToone;
+
+import java.time.LocalDate;
+import jakarta.persistence.*;
+
+@Entity
+public class Dl {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int dlNo;
+	private LocalDate expdate;
+	private LocalDate issueDate;
+	private String type;
+
+	public int getDlNo() {
+		return dlNo;
+	}
+
+	public Dl() {
+		super();
+	}
+
+	public Dl(LocalDate expdate, LocalDate issueDate, String type) {
+		super();
+		this.expdate = expdate;
+		this.issueDate = issueDate;
+		this.type = type;
+	}
+
+	public LocalDate getExpdate() {
+		return expdate;
+	}
+
+	public void setExpdate(LocalDate expdate) {
+		this.expdate = expdate;
+	}
+
+	public LocalDate getIssueDate() {
+		return issueDate;
+	}
+
+	public void setIssueDate(LocalDate issueDate) {
+		this.issueDate = issueDate;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+}

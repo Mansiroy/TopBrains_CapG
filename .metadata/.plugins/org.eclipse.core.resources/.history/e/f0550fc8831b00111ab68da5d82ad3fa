@@ -1,0 +1,38 @@
+package com.cg.Entity;
+
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+
+public class productMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		// em.getTransaction().begin();
+//        TypedQuery<Product> q = em.createQuery("select p from Product p", Product.class);
+//		  List<Product> li = q.getResultList();
+
+//		TypedQuery<String> q = em.createQuery("select p.name from Product p", String.class);
+//		List<String> li = q.getResultList();
+		
+//		TypedQuery<String> q = em.createQuery("select p.name, p.price, p.mfd from Product p", String.class);
+//		List<String> li = q.getResultList();
+		
+		TypedQuery<Object[]> q = em.createQuery(
+		        "select p.name, p.price, p.mfd from Product p", Object[].class);
+
+		List<Object[]> li = q.getResultList();
+
+		for(Object[] p : li){
+		    System.out.println("Name : " + p[0]);
+		    System.out.println("Price : " + p[1]);
+		    System.out.println("MFD : " + p[2]);
+		    System.out.println("--------------------");
+		}
+
+		li.forEach(p -> System.out.println(p));
+	}
+}

@@ -1,0 +1,131 @@
+package com.cg.oneTomany;
+
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+//import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
+
+public class EmpdeptMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Department d = new Department();
+		d.setDeptName("IT");
+		
+		Department d1 = new Department();
+		d1.setDeptName("HR");
+
+		Department d2 = new Department();
+		d2.setDeptName("Sales");
+
+		Department d3 = new Department();
+		d3.setDeptName("Finance");
+
+		Employee e1 = new Employee();
+		e1.setEmpName("Rahul");
+		e1.setSalary(50000);
+		e1.setDepartment(d);
+
+		Employee e2 = new Employee();
+		e2.setEmpName("Anita");
+		e2.setSalary(60000);
+		e2.setDepartment(d1);
+		
+		Employee e3 = new Employee();
+		e3.setEmpName("Mansi");
+		e3.setSalary(30000);
+		e3.setDepartment(d2);
+		
+		Employee e4 = new Employee();
+		e4.setEmpName("Samar");
+		e4.setSalary(60900);
+		e4.setDepartment(d3);
+		
+		Employee e5 = new Employee();
+		e5.setEmpName("Chitvan");
+		e5.setSalary(80000);
+		e5.setDepartment(d);
+
+		em.persist(d);
+		em.persist(e1);
+		
+		em.persist(d1);
+		em.persist(e2);
+		
+		em.persist(d2);
+		em.persist(e3);
+		
+		em.persist(d3);
+		em.persist(e4);
+		
+		em.persist(d);
+		em.persist(e5);
+		
+		
+		tx.commit();
+		
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+		Root<Employee> root = cq.from(Employee.class);
+//		Join<Employee, Department> join = root.join("department");
+//		cq.multiselect(join.get("deptName"), cb.count(root));
+//		cq.groupBy(join.get("deptName"));
+//		TypedQuery<Object[]> q = em.createQuery(cq);
+//		List<Object[]> list = q.getResultList();
+//		for(Object[] obj : list){
+//		    System.out.println("Department : " + obj[0] + 
+//		                       " | Employees : " + obj[1]);
+//		}
+		
+		tx.begin();
+		Query q = em.createQuery(
+		        "update Employee e set e.salary = :sal where e.empId = :id");
+
+		q.setParameter("sal", 70000);
+		q.setParameter("id", 1);
+		int row = q.executeUpdate();
+		tx.commit();
+
+		System.out.println(row + " record updated");
+		
+		
+		// Join Employee with Department
+		Join<Employee, Department> join = root.join("department");
+
+		// select department name and count employees
+		cq.multiselect(join.get("deptName"), cb.count(root));
+
+		// WHERE condition
+		cq.where(cb.gt(root.get("salary"), 30000));
+
+		// GROUP BY department
+		cq.groupBy(join.get("deptName"));
+
+		// ORDER BY department name
+		cq.orderBy(cb.asc(join.get("deptName")));
+
+		TypedQuery<Object[]> q = em.createQuery(cq);
+
+		List<Object[]> list = q.getResultList();
+
+		for(Object[] obj : list){
+		    System.out.println("Department: " + obj[0] +
+		                       " | Employees: " + obj[1]);
+		}
+   }
+}

@@ -1,0 +1,29 @@
+package com.cg.oneTomany;
+
+import java.util.ArrayList;
+
+import com.sun.tools.javac.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class QuestionMain {
+  public static void main(String[] args) {
+	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em =emf.createEntityManager();
+		em.getTransaction().begin();
+		Question q = new Question("WHAT IS JAVA?", "M");
+		List<answer> li = new ArrayList<>();
+		li.add(new Answer("JAVA IS OOPS"));
+		li.add(new Answer("JAVA IS OOPS"));
+		li.add(new Answer("JAVA IS OOPS"));
+		q.setAnswer(li);
+		em.persist(q);
+		em.getTransaction().commit();
+		System.out.println("Person Created...");
+  }
+}
+//select * from question_answer
+//from question
+//from answer

@@ -1,0 +1,38 @@
+package com.cg.oneTomany;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+
+public class EmpdeptMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+
+		Department d = new Department();
+		d.setDeptName("IT");
+
+		Employee e1 = new Employee();
+		e1.setEmpName("Rahul");
+		e1.setSalary(50000);
+		e1.setDepartment(d);
+
+		Employee e2 = new Employee();
+		e2.setEmpName("Anita");
+		e2.setSalary(60000);
+		e2.setDepartment(d);
+
+		em.persist(d);
+		em.persist(e1);
+		em.persist(e2);
+
+		tx.commit();
+		
+		
+}
+}

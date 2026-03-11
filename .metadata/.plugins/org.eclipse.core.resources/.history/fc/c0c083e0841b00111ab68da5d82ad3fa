@@ -1,0 +1,54 @@
+package com.cg.Entity;
+
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+
+public class productMain {
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-pu");
+		EntityManager em = emf.createEntityManager();
+		// em.getTransaction().begin();
+//        TypedQuery<Product> q = em.createQuery("select p from Product p", Product.class);
+//		  List<Product> li = q.getResultList();
+
+//		TypedQuery<String> q = em.createQuery("select p.name from Product p", String.class);
+//		List<String> li = q.getResultList();
+		
+		//Now i want to read the data only name, price, mfd using to make objects of array
+//		TypedQuery<Object[]> q = em.createQuery(
+//		        "select p.name, p.price, p.mfd from Product p", Object[].class);
+//
+//		List<Object[]> li = q.getResultList();
+//
+//		for(Object[] p : li){
+//		    System.out.println("Name : " + p[0]);
+//		    System.out.println("Price : " + p[1]);
+//		    System.out.println("MFD : " + p[2]);
+//		    System.out.println("--------------------");
+//		}
+//
+//		li.forEach(p -> System.out.println(p));
+		
+//		TypedQuery<ProductDTO> q = em.createQuery(
+//		        "select new ProductDTO(p.name, p.price, p.mfd) from Product p", ProductDTO.class);
+//
+//		List<ProductDTO> li = q.getResultList();
+//		li.forEach(p -> System.out.println(p));
+		
+		//I want to find the item whose price is less than 50000
+//		TypedQuery<Product> q = em.createQuery(
+//		        "select p from Product p where p.price < 50000", Product.class);
+		TypedQuery<Product> q = em.createQuery(
+		        "select p from Product p where p.price < :p", Product.class); //:p is named parameter
+		q.setParameter("P", 50000);
+
+		List<Product> li = q.getResultList();
+		li.forEach(p -> System.out.println(p));
+		
+		
+	}
+}
