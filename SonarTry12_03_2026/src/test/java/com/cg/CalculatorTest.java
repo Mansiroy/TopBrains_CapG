@@ -1,0 +1,50 @@
+package com.cg;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.concurrent.TimeUnit;
+
+
+ class CalculatorTest {
+	static Calculator cal;
+	
+	@BeforeAll  // using @BeforeAll means it will be executed before all test case
+	 static void init() {
+		cal = new Calculator();
+		System.out.println("Calculator object created");
+	}
+	
+	@AfterAll  // using @AfterAll means it will be executed after all test case
+
+	static void destroy() {
+	    cal = null;
+	    System.out.println("Calculator object destroyed");
+	}
+	
+    @Test
+    @CsvSource({"2,4,6" , "6,5,11", "10,15,25"})
+     void calTest() {
+        // Test addition
+		System.out.println("Testing calculate method");
+    	assertEquals(10, cal.calculate(7, 3));
+    }
+    
+
+    @Timeout(value=10000000, unit = TimeUnit.MILLISECONDS)
+
+    @ParameterizedTest
+    @ValueSource(ints = {13,17,5,3,23})
+     void primeTest(int n) {
+		System.out.println("Testing isPrime method");
+    	assertTrue(cal.isPrime(n));
+	   assertFalse(cal.isPrime(0));
+    	assertFalse(cal.isPrime(1));
+    	
+    }
+}

@@ -1,60 +1,60 @@
 package com.cg;
+
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import  org.junit.jupiter.api.Timeout;
 
-public class CalculatorTest {
+ class CalculatorTest {
 	static Calculator cal;
-//	@BeforeEach
+//	@BeforeEach  // using @BeforeEach means it will be executed before every test case
 //	public void init() {
 //		cal = new Calculator();
 //		System.out.println("Calculator object created");
 //	}
-//	
-//	@AfterEach
-//	public void destroy() {
-//		cal = null;
-//		System.out.println("Calculator object destroyed");
-//	}
 	
-	@BeforeAll
-	public static void init() {
+	@BeforeAll  // using @BeforeAll means it will be executed before all test case
+	 static void init() {
 		cal = new Calculator();
 		System.out.println("Calculator object created");
 	}
-
-	@AfterAll
-	public static void destroy() {
-		cal = null;
-		System.out.println("Calculator object destroyed");
+	
+	@AfterAll  // using @AfterAll means it will be executed after all test case
+	 static void destroy() {
+		cal = new Calculator();
+		System.out.println("Calculator object created");
 	}
 	
-	@Test
-	@DisplayName(value = "Testing Calculate Value")
-	@ParameterizedTest
-	@CscSource({"2, 4, 6", "6, 5, 11", "10, 15, 25"})
-	public void calTest() {
-		//Calculator cal = new Calculator();
-		System.out.println("Testing Calculate Method");
-		assertEquals(10, cal.calculate(7,  3));
-	}
+//	@AfterEach  // using @AfterEach means it will be executed after every test case
+//	public void destroy() {
+//		cal = new Calculator();
+//		System.out.println("Calculator object destroyed");
+//	}
 	
-	@Test
-//	@Timeout(2)   // 2 is milisecond
-	@Timeout(value = 1000000, unit =TimeUnit.NANOSECONDS)
-	//@Disabled
-	@ParameterizedTest
 	
-	public void isPrimeTest() {
-		System.out.println("Testing isPrime Method");
-
-		assertTrue(cal.isPrime(13));
-		assertFalse(cal.isPrime(0));
-		
-	}
+    @Test
+    @CsvSource({"2,4,6" , "6,5,11", "10,15,25"})
+     void calTest() {
+        // Test addition
+		System.out.println("Testing calculate method");
+    	assertEquals(10, cal.calculate(7, 3));
+    }
+    
+//    @Test
+    @Timeout(value=10000000, unit = TimeUnit.MILLISECONDS)
+//    @Timeout(value=1, unit = TimeUnit.NANOSECONDS)
+    @ParameterizedTest
+    @ValueSource(ints = {13,17,5,3,23})
+     void primeTest(int n) {
+		System.out.println("Testing isPrime method");
+    	assertTrue(cal.isPrime(n));
+//    	assertFalse(cal.isPrime(0));
+//    	assertFalse(cal.isPrime(1));
+    	
+    }
 }

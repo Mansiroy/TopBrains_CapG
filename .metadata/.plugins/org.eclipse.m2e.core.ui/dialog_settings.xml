@@ -51,6 +51,7 @@
 			<item value="com.cg"/>
 		</list>
 		<list key="name">
+			<item value="SonarTry12_03_2026"/>
 			<item value="JPA-example1"/>
 			<item value="TopBrainsAssignmet2"/>
 			<item value="assignment-6_HIBERNATE"/>
@@ -59,6 +60,7 @@
 			<item value="employee-management"/>
 		</list>
 		<list key="artifactId">
+			<item value="SonarTry12_03_2026"/>
 			<item value="JPA-example1"/>
 			<item value="TopBrainsAssignmet2"/>
 			<item value="assignment-6_HIBERNATE"/>

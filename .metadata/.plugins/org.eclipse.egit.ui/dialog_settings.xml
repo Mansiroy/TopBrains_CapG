@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item key="GitSelectRepositoryPage.lastRepository" value="C:\Users\91843\OneDrive\Desktop\Project\java-maven-jenkins-sample\.git"/>
 	<list key="RepositorySelectionPage.UsedUris">
 		<item value="https://github.com/priyakinha/Capgemini"/>
 		<item value="https://github.com/priyakinha/Capgemini/tree/main/JPAAssessment-07-03-2026"/>
