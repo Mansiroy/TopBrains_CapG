@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+    <context:annotation-config></context:annotation-config>
+   <bean id="Hello" class="com.cg.bean.HelloWorld" scope="prototype">
+<!--        <property name = "name" value="Newbie"/> &lt;!&ndash; This is used for Setter Injection &ndash;&gt;-->
+        <property name="language">
+            <list>
+                <value>Hindi</value>
+                <value>English</value>
+                <value>Sanskrit</value>
+            </list>
+        </property>
+<!--        <constructor-arg name="name" value="Noobie"></constructor-arg>  &lt;!&ndash; This is used for Constructor Injection &ndash;&gt;-->
+    </bean>
+    <bean id="e" class="com.cg.bean.Employee">
+        <property name="empId" value="101"></property>
+        <property name="name" value="newbie"></property>
+<!--        <property name="address" ref="address"></property>-->
+    </bean>
+
+    <bean id="address2" class="com.cg.bean.Address">
+        <constructor-arg name="city" value="City"></constructor-arg>
+        <constructor-arg name="country" value="Country"></constructor-arg>
+        <constructor-arg name="zip" value="9999999"></constructor-arg>
+
+
+<!--        <property name="city" value="City"></property>-->
+<!--        <property name="country" value="Country"></property>-->
+<!--        <property name="zip" value="999999"></property>-->
+    </bean>
+
+
+    <bean id="address1" class="com.cg.bean.Address">
+<!--        <constructor-arg name="city" value="City"></constructor-arg>-->
+<!--        <constructor-arg name="country" value="Country"></constructor-arg>-->
+<!--        <constructor-arg name="zip" value="9999999"></constructor-arg>-->
+
+
+                <property name="city" value="City1"></property>
+                <property name="country" value="Country1"></property>
+                <property name="zip" value="999999"></property>
+    </bean>
+
+</beans>
