@@ -1,0 +1,6 @@
+After passes all the test cases, i want to post some data via postman, 
+so firstly, update the application file, then add dependencies of mysql to connect the project in the pom.xml, 
+then open postman, choose post, use this url : http://localhost:8085/api/orders/4 and write raw data in json and send it, open workbench
+use mydb database, show tables, ad then select * from orders
+now you can see the data in the workbench
+use the get post methoods also .
